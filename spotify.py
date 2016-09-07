@@ -30,8 +30,9 @@ while Continue == "yes" or Continue == "y":
 
 					for x in artistAlbumData["items"]:
 						if x["name"] not in artistAlbums:
-							artistAlbums.append(x["name"])
-							print x["name"]
+							if "US" in x["available_markets"]:
+								artistAlbums.append(x["name"])
+								print x["name"]
 					break
 				except:
 					print ("This artist does not have a catalog of albums on Spotify.")
