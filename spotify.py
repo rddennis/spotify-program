@@ -34,11 +34,14 @@ while Continue == "yes" or Continue == "y":
 					artistAlbums = []
 					albumSelectCounter = 1
 					albumNumber = 0 
+					previousAlbum = ""
 
 					for x in artistAlbumData["items"]:
-						albumNumber += 1
-						artistAlbums.append([{"ourID": albumSelectCounter}, {"name": x["name"]}, {"spotifyID": x["id"]}])
-						albumSelectCounter += 1
+						if x["name"] != previousAlbum:
+							albumNumber += 1
+							artistAlbums.append([{"ourID": albumSelectCounter}, {"name": x["name"]}, {"spotifyID": x["id"]}])
+							previousAlbum = x["name"]
+							albumSelectCounter += 1
 
 					print("This artist has %s albums available on Spotify for the U.S. market. \n" %albumNumber)
 
@@ -64,14 +67,13 @@ while Continue == "yes" or Continue == "y":
 											print str(track["track_number"]) + ". " + str(track["name"])
 								break
 									
-							except TypeError:
+							except (TypeError, NameError):
 								print "Invalid entry."
-								break
 
 					break
 				except IndexError:
 					print ("This artist does not have a catalog of albums on Spotify.")
-					break
+
 			break
 		except IndexError:
 			print ("This artist cannot be found.")
